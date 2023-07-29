@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.base.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+
+    "paths": {
+      "/@/*": ["./src/*"]
+    },
+
+    "lib": ["ESNext", "dom", "dom.iterable"],
+    "jsx": "react-jsx"
+  },
+
+  "include": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.jsx",
+    "src/**/*.tsx",
+    "types/**/*.d.ts",
+    "../../types/**/*.d.ts",
+    "../preload/contracts.d.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "*.config.js",
+    "dist"
+  ]
+}

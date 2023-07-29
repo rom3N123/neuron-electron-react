@@ -1,0 +1,86 @@
+{
+  "name": "vite-electron-builder-react",
+  "version": "1.0.0",
+  "description": "React version of cawa-93's secure boilerplate for Electron apps with Vite and TypeScript.",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moodiest/vite-electron-builder-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moodiest/vite-electron-builder-react/issues"
+  },
+  "homepage": "https://github.com/moodiest/vite-electron-builder-react#readme",
+  "private": true,
+  "engines": {
+    "node": ">=v16.13",
+    "npm": ">=8.1"
+  },
+  "main": "packages/main/dist/index.cjs",
+  "scripts": {
+    "clean": "rimraf dist && rimraf packages/main/dist && rimraf packages/preload/dist && rimraf packages/renderer/dist",
+    "build": "yarn build:main && yarn build:preload && yarn build:renderer",
+    "build:main": "cd ./packages/main && vite build",
+    "build:preload": "cd ./packages/preload && vite build",
+    "build:renderer": "cd ./packages/renderer && vite build",
+    "compile": "yarn clean && cross-env MODE=production yarn build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+    "test": "yarn test:main && yarn test:preload && yarn test:renderer && yarn test:e2e",
+    "test:e2e": "yarn build && vitest run",
+    "test:main": "vitest run -r packages/main --passWithNoTests",
+    "test:preload": "vitest run -r packages/preload --passWithNoTests",
+    "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
+    "watch": "node scripts/watch.js",
+    "lint": "eslint . --ext js,ts,jsx,tsx",
+    "lint:main": "eslint packages/main --ext js,ts,jsx,tsx",
+    "lint:preload": "eslint packages/preload --ext js,ts,jsx,tsx",
+    "lint:renderer": "eslint packages/renderer --ext js,ts,jsx,tsx",
+    "tsc": "yarn tsc:main && yarn tsc:preload && yarn tsc:renderer",
+    "tsc:main": "tsc --noEmit -p packages/main/tsconfig.json",
+    "tsc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+    "tsc:renderer": "tsc --noEmit -p packages/renderer/tsconfig.json"
+  },
+  "build:": {
+    "afterSign": "electron-builder-notarize",
+    "mac": {
+      "hardenedRuntime": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "cross-env": "7.0.3",
+    "electron": "^18.0.1",
+    "electron-builder": "^22.14.13",
+    "electron-builder-notarize": "^1.4.0",
+    "electron-devtools-installer": "3.2.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "happy-dom": "^2.52.0",
+    "nano-staged": "0.6.0",
+    "playwright": "1.19.1",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.49.9",
+    "simple-git-hooks": "2.7.0",
+    "typescript": "4.5.5",
+    "vite": "^2.9.0",
+    "vitest": "^0.8.1"
+  },
+  "dependencies": {
+    "electron-updater": "^4.6.5",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.2.2"
+  }
+}
